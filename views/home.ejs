@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+</head>
+<body>
+    <div class="d-flex justify-content-end mt-">
+        <form action="/accounts/log-out" method="post">
+            <button type="submit" class="btn ">Log out</button>
+        </form>
+    </div>
+    <div class="container pt-4 pb-2 " style="max-width: 800px;" >
+        <h2 class="fw-bold">To Do </h2>
+        <small class="text-secondary mb-1">Do your tasks! </small>
+        <form action="/tasks/create" class="row " method="post">
+            <div class="col">
+                <input type="text" name="title" class="form-control" id="">
+            </div>            
+            <div class="col-auto text-center">
+                <input type="submit" value="Submit" class="btn btn-primary">
+            </div>
+        </form>
+
+        <table class="table table-sm mt-4 " >
+            <tbody>
+                <%tasks.forEach(task => {%>
+                    <tr>
+                        <td >
+                            <form action="/tasks/<%= task.task_id %>/mark" method="post">
+                                <div class="form-check" >
+                                    <input class="form-check-input" type="checkbox" name="mark" onchange="this.form.submit()"  id="flexCheckChecked" <%= task.is_completed ? 'checked' : ''%>>
+                                </div>
+                            </form>
+                        </td>
+                        <td id="task-title-<%=task.task_id%>"class=" text-center <%= task.is_completed ? 'text-decoration-line-through' : ''%>"><%= task.title %></td>
+                        <td class="text-center">
+                            <div class="d-flex flex-row justify-content-end">
+                                <button class="btn btn-sm edit-task" id="<%=task.task_id%>" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <form action="/tasks/<%= task.task_id %>/delete" method="post">
+                                    <button onclick="this.form.submit()" class="btn btn-sm">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </form>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                <%})%>
+            </tbody>
+          </table>
+    </div>
+</body>
+<div class="modal" tabindex="-1" id="editModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" id="edit-form" class="d-flex flex-column">
+                <input type="text" id="edit-task" class="form-control" name="title"></p>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary ">
+                        Edit
+                    </button>
+                </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<script>
+    document.querySelectorAll(".edit-task").forEach(btn => {
+        btn.addEventListener("click",(event) => {
+            const taskId = event.target.getAttribute('id') || event.target.parentElement.getAttribute('id')
+            console.log(taskId)
+            var text = document.getElementById("task-title-"+taskId).innerText
+            document.getElementById("edit-task").value = text
+            document.getElementById("edit-form").action = `/tasks/${taskId}/edit`
+        })
+    });
+</script>
+</html>
