@@ -1,12 +1,9 @@
 # TO DO LIST
 
-To Do List yO yo Yo
+MVC approach To Do List
 
 ## 
 
-**Database**
-
-File is named as db.sql
 
 **Install packages**
 
@@ -14,11 +11,10 @@ Install packages used in this app by running
 ```
 npm install
 ```
-**Environment Variables**
+**Database**  
 
-Sa .env, change variables according to your will sir.
-
-## Running the program
+Create a database and run <code>npx sequelize db:migrate</code> to generate the tables
+## Running the program 
 
 ```
 node app
@@ -31,6 +27,3 @@ node app
 * [Node.js](https://nodejs.org/en/) - server
 
 
-## Acknowledgments
-
-* npm packages used

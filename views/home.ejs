@@ -36,19 +36,19 @@
                 <%tasks.forEach(task => {%>
                     <tr>
                         <td >
-                            <form action="/tasks/<%= task.task_id %>/mark" method="post">
+                            <form action="/tasks/<%= task.id %>/mark" method="post">
                                 <div class="form-check" >
                                     <input class="form-check-input" type="checkbox" name="mark" onchange="this.form.submit()"  id="flexCheckChecked" <%= task.is_completed ? 'checked' : ''%>>
                                 </div>
                             </form>
                         </td>
-                        <td id="task-title-<%=task.task_id%>"class=" text-center <%= task.is_completed ? 'text-decoration-line-through' : ''%>"><%= task.title %></td>
+                        <td id="task-title-<%=task.id%>"class=" text-center <%= task.is_completed ? 'text-decoration-line-through' : ''%>"><%= task.title %></td>
                         <td class="text-center">
                             <div class="d-flex flex-row justify-content-end">
-                                <button class="btn btn-sm edit-task" id="<%=task.task_id%>" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <button class="btn btn-sm edit-task" id="<%=task.id%>" data-bs-toggle="modal" data-bs-target="#editModal">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
-                                <form action="/tasks/<%= task.task_id %>/delete" method="post">
+                                <form action="/tasks/<%= task.id %>/delete" method="post">
                                     <button onclick="this.form.submit()" class="btn btn-sm">
                                         <i class="bi bi-trash-fill"></i>
                                     </button>
